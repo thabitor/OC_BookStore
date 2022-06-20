@@ -1,7 +1,15 @@
+body {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
 .main-container {
   background-color: #69bcb76d;
   width: 375px;
-  padding: 1%;
+  height: 844px;
+  padding: 1.5%;
 }
 
 .header-container {
