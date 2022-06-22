@@ -26,7 +26,32 @@ h1 {
 .block-search {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* position: absolute; */
   /* align-items: center; */
+}
+.block-search-buttons {
+  display: flex;
+  width: 40%;
+  height: 100px;
+  justify-content: space-evenly;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.book-search-results {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  width: 100%;
+  height: 70px;
+}
+
+.book-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 60px;
 }
 
 .form-group {
@@ -37,18 +62,18 @@ h1 {
   width: 70%;
 }
 
-.block-search-buttons {
-  display: flex;
-  width: 40%;
-  height: 100px;
-  justify-content: space-evenly;
-  flex-direction: column;
-  flex-wrap: wrap;
+.hidden {
+  display: none;
 }
 
-.block-search-results {
-  display: flex;
-  flex-direction: column;
+.textResults {
   width: 100%;
-  height: 200px;
+}
+
+.imgResults {
+  /* display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  justify-items: flex-end; */
 }
