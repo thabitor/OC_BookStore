@@ -5,14 +5,19 @@ body {
   margin: 0;
 }
 
+h1 {
+  background-color: whitesmoke;
+}
+
 .main-container {
-  background-color: #69bcb76d;
+  background-color: white;
   width: 375px;
   height: 844px;
-  padding: 1.5%;
+  padding: 1%;
 }
 
 .header-container {
+  /* background-color: whitesmoke; */
 }
 
 .content-container {
