@@ -26,9 +26,8 @@ h1 {
 .block-search {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* position: absolute; */
-  /* align-items: center; */
+  justify-items: center;
+
 }
 .block-search-buttons {
   display: flex;
@@ -43,15 +42,15 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-items: center;
-  width: 100%;
-  height: 70px;
+  /* width: 100%; */
 }
 
 .book-container {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  height: 60px;
+  justify-items: center;
+  width: 100%;
+  /* height: 60px; */
 }
 
 .form-group {
