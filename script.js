@@ -72,7 +72,6 @@ addBookBtn.addEventListener("click", () => {
   searchBtnsContainer.appendChild(cancelBtn);
 });
 
-
 const pageBtnsDiv = document.createElement("div");
 pageBtnsDiv.classList.add("page-btns-container");
 const nextBtn = document.createElement("button");
@@ -84,18 +83,15 @@ prevBtn.innerHTML = "<< back";
 pageBtnsDiv.appendChild(prevBtn);
 pageBtnsDiv.appendChild(nextBtn);
 
-
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
 const URLauth =
   "https://www.googleapis.com/books/v1/volumes?q=+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
 const apiKey = "AIzaSyCc7mtocCRRD4toqVJrcV0AnVPPD6ca_Rw";
 
-
 const textbookBoxHTML = document.getElementById("txtSection");
 const imgbookBoxHTML = document.getElementById("imgSection");
 const authorsHTML = document.getElementsByClassName("s-author");
-
 
 let title;
 let author;
@@ -119,7 +115,6 @@ function displayResults(books) {
     }
   }
 }
-
 
 function loadData(title, author, start) {
   fetch(
@@ -149,7 +144,6 @@ function loadData(title, author, start) {
             });
         });
       }
-      
     });
 }
 
