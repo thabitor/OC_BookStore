@@ -1,20 +1,3 @@
-const template = `<hr>
-<div class="book-container" id="bookbox">
-  <section class="textResults" id="txtSection">
-    <h3>Title :</h3>
-    <span class="s-title"> __title__</span>
-    <h4>ID :</h4>
-    <span class="s-bookid"> __bookid__</span>
-    <h3>Authors :</h3>
-    <span class="s-author"> __author__</span>
-    <h3>Description :</h3>
-    <span class="s-desc"> __description__</span>
-  </section>
-  <section class="imgResults" id="imgSection">
-          <img src="__src__" />
-  </section>
-</div>`;
-
 // Elements retrieved
 
 const mainContainer = document.getElementById("main-container");
@@ -98,21 +81,30 @@ let author;
 
 function displayResults(books) {
   for (const book of books) {
-    const thumbnail = book.volumeInfo.imageLinks;
+    const imageLinks = book.volumeInfo.imageLinks;
 
-    if (thumbnail) {
-      bookBoxHTML.innerHTML += template
-        .replace("__title__", book.volumeInfo.title)
-        .replace("__author__", book.volumeInfo.authors)
-        .replace("__description__", book.volumeInfo.description)
-        .replace("__src__", book.volumeInfo.imageLinks.thumbnail);
-    } else {
-      bookBoxHTML.innerHTML += template
-        .replace("__title__", book.volumeInfo.title)
-        .replace("__author__", book.volumeInfo.authors)
-        .replace("__description__", book.volumeInfo.description)
-        .replace("__src__", "img/defaultbook.jpg");
-    }
+    resultsContainer.innerHTML += `
+    <div class="card" id="bookbox">
+  <section class="textResults" id="txtSection">
+  <p class="info"> <span class="leftspan"> Title </span> <span class="text s-title rightspan"> ${
+    book.volumeInfo.title
+  }</span> </p>
+    <p class="info"><span class="leftspan">ID </span> <span class="text s-bookid rightspan"> ${
+      book.id
+    }</span> </p> 
+    <p class="info"><span class="leftspan">Authors </span> <span class="text s-author rightspan"> ${
+      book.volumeInfo.authors
+    }</span> </p>
+    <p class="info"><span class="leftspan">Description </span> <span class="text s-desc rightspan"> ${
+      book.volumeInfo.description
+    }</span> </p> 
+  </section>
+  <section class="imgResults" id="imgSection">
+          <img src="${
+            imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"
+          }" />
+          </section>
+</div>`;
   }
 }
 
@@ -139,7 +131,7 @@ function loadData(title, author, start) {
           )
             .then((response) => response.json())
             .then((data) => {
-              bookBoxHTML.innerHTML = "";
+              resultsContainer.innerHTML = "";
               displayResults(data.items);
             });
         });
@@ -148,22 +140,23 @@ function loadData(title, author, start) {
 }
 
 searchBtn.addEventListener("click", () => {
-  resultsContainer.appendChild(bookBoxHTML);
-  bookBoxHTML.innerHTML = "";
+  resultsContainer.innerHTML = "";
   title = titleInput.value;
   author = authorInput.value;
   loadData(title, author, 0);
 });
 
+cancelBtn.addEventListener("click", () => {});
+
 nextBtn.addEventListener("click", (e) => {
-  bookBoxHTML.innerHTML = "";
+  resultsContainer.innerHTML = "";
   offset += 15;
   console.log(e.target.innerText);
   loadData(title, author, offset);
 });
 
 prevBtn.addEventListener("click", (e) => {
-  bookBoxHTML.innerHTML = "";
+  resultsContainer.innerHTML = "";
   offset -= 15;
   console.log(e.target.innerText);
   loadData(title, author, offset);

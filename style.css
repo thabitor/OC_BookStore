@@ -17,7 +17,6 @@ h1 {
 }
 
 .header-container {
-  /* background-color: whitesmoke; */
 }
 
 .content-container {
@@ -27,8 +26,8 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-items: center;
-
 }
+
 .block-search-buttons {
   display: flex;
   width: 40%;
@@ -38,19 +37,32 @@ h1 {
   flex-wrap: wrap;
 }
 
-.book-search-results {
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  /* width: 100%; */
+.results-container {
 }
 
-.book-container {
+.scrolling-wrapper {
   display: flex;
-  flex-direction: column;
-  justify-items: center;
+  overflow-x: auto;
+}
+
+.card {
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  border: 1px solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
   width: 100%;
-  /* height: 60px; */
+  height: 450px;
+  margin-right: 15px;
+  padding: 2%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card::-webkit-scrollbar {
+  display: none;
 }
 
 .form-group {
@@ -67,12 +79,48 @@ h1 {
 
 .textResults {
   width: 100%;
+  padding: 1%;
+}
+
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.s-author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.info {
+  /* display: flex;
+  flex-direction: row; */
+}
+
+.leftspan {
+  font-weight: 700;
+  text-align: left;
+  padding-bottom: 0.5%;
+}
+
+.rightspan {
+  text-align: start;
 }
 
 .imgResults {
-  /* display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
-  justify-items: flex-end; */
+  display: flex;
+  padding: 1%;
+}
+
+img {
+  height: 150px;
+  width: 100px;
 }
