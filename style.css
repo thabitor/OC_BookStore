@@ -11,8 +11,10 @@ h1 {
 
 .main-container {
   background-color: white;
-  width: 375px;
+  /* width: 375px; */
   height: 844px;
+  min-width: 350px;
+  max-width: 600px;
   padding: 1%;
 }
 

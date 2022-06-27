@@ -43,18 +43,6 @@ cancelBtn.innerHTML = "Cancel";
 
 //Event Listeners
 
-addBookBtn.addEventListener("click", () => {
-  mainContainer.removeChild(content);
-  searchContainer.appendChild(searchForm);
-  searchContainer.appendChild(searchBtnsContainer);
-  searchForm.appendChild(labelInputTitle);
-  searchForm.appendChild(titleInput);
-  searchForm.appendChild(labelInputAuthor);
-  searchForm.appendChild(authorInput);
-  searchBtnsContainer.appendChild(searchBtn);
-  searchBtnsContainer.appendChild(cancelBtn);
-});
-
 const pageBtnsDiv = document.createElement("div");
 pageBtnsDiv.classList.add("page-btns-container");
 const nextBtn = document.createElement("button");
@@ -85,26 +73,24 @@ function displayResults(books) {
 
     resultsContainer.innerHTML += `
     <div class="card" id="bookbox">
-  <section class="textResults" id="txtSection">
-  <p class="info"> <span class="leftspan"> Title </span> <span class="text s-title rightspan"> ${
+    <section class="textResults" id="txtSection">
+  <p class="info"> <span class="leftspan"> Title :</span> <span class="text s-title rightspan"> ${
     book.volumeInfo.title
   }</span> </p>
-    <p class="info"><span class="leftspan">ID </span> <span class="text s-bookid rightspan"> ${
-      book.id
-    }</span> </p> 
-    <p class="info"><span class="leftspan">Authors </span> <span class="text s-author rightspan"> ${
+  <p class="info"><span class="leftspan">ID :</span> <span class="text s-bookid rightspan"> ${
+    book.id
+  }</span> </p> 
+    <p class="info"><span class="leftspan">Authors :</span> <span class="text s-author rightspan"> ${
       book.volumeInfo.authors
     }</span> </p>
-    <p class="info"><span class="leftspan">Description </span> <span class="text s-desc rightspan"> ${
+    <p class="info"><span class="leftspan">Description :</span> <span class="text s-desc rightspan"> ${
       book.volumeInfo.description
     }</span> </p> 
-  </section>
-  <section class="imgResults" id="imgSection">
-          <img src="${
-            imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"
-          }" />
-          </section>
-</div>`;
+    </section>
+    <section class="imgResults" id="imgSection">
+    <img src="${imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"}" />
+    </section>
+    </div>`;
   }
 }
 
@@ -139,6 +125,20 @@ function loadData(title, author, start) {
     });
 }
 
+addBookBtn.addEventListener("click", () => {
+  addBookBtn.classList.add("hidden");
+  mainContainer.insertBefore(searchContainer, resultsContainer);
+  mainContainer.removeChild(content);
+  searchContainer.appendChild(searchForm);
+  searchContainer.appendChild(searchBtnsContainer);
+  searchForm.appendChild(labelInputTitle);
+  searchForm.appendChild(titleInput);
+  searchForm.appendChild(labelInputAuthor);
+  searchForm.appendChild(authorInput);
+  searchBtnsContainer.appendChild(searchBtn);
+  searchBtnsContainer.appendChild(cancelBtn);
+});
+
 searchBtn.addEventListener("click", () => {
   resultsContainer.innerHTML = "";
   title = titleInput.value;
@@ -146,7 +146,12 @@ searchBtn.addEventListener("click", () => {
   loadData(title, author, 0);
 });
 
-cancelBtn.addEventListener("click", () => {});
+cancelBtn.addEventListener("click", () => {
+  addBookBtn.classList.remove("hidden");
+  mainContainer.insertBefore(content, resultsContainer);
+  mainContainer.removeChild(searchContainer);
+  resultsContainer.innerHTML = "";
+});
 
 nextBtn.addEventListener("click", (e) => {
   resultsContainer.innerHTML = "";
