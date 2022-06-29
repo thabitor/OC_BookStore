@@ -5,6 +5,7 @@ const headerContainer = document.getElementById("header-container");
 const resultsContainer = document.getElementById("results-container");
 const content = document.getElementById("content");
 const addBookBtn = document.getElementsByClassName("btn")[0];
+
 const bookBoxHTML = document.getElementById("bookbox");
 const searchContainer = document.getElementById("search-container");
 
@@ -19,19 +20,26 @@ const labelInputTitle = document.createElement("label");
 const labelInputAuthor = document.createElement("label");
 const searchBtn = document.createElement("button");
 const cancelBtn = document.createElement("button");
+const hrLine = document.createElement("hr");
 
 searchForm.setAttribute("class", "form-group");
 titleInput.setAttribute("type", "text");
 titleInput.setAttribute("class", "block-search__inputbox");
 titleInput.setAttribute("id", "titleInput");
+titleInput.class = "input";
 labelInputTitle.setAttribute("for", "titleInput");
 authorInput.setAttribute("type", "text");
 authorInput.setAttribute("class", "block-search__inputbox");
 authorInput.setAttribute("id", "authorInput");
+authorInput.class = "input";
 labelInputAuthor.setAttribute("for", "authorInput");
 searchBtnsContainer.setAttribute("class", "block-search-buttons");
-searchBtn.setAttribute("class", "block-search__btn");
+searchBtn.setAttribute("class", "block-search__btn green");
 cancelBtn.setAttribute("class", "block-search__btn red");
+searchContainer.class = "fixed-content";
+headerContainer.class = "fixed-content";
+searchBtn.id = "search-btn";
+cancelBtn.id = "cancel-btn";
 
 // InnerHTML
 
@@ -54,10 +62,14 @@ prevBtn.innerHTML = "<< back";
 pageBtnsDiv.appendChild(prevBtn);
 pageBtnsDiv.appendChild(nextBtn);
 
+// cut down on URLs - u need only one.
+// You can use templated strings
+
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
 const URLauth =
   "https://www.googleapis.com/books/v1/volumes?q=+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
+
 const apiKey = "AIzaSyCc7mtocCRRD4toqVJrcV0AnVPPD6ca_Rw";
 
 const textbookBoxHTML = document.getElementById("txtSection");
@@ -70,7 +82,6 @@ let author;
 function displayResults(books) {
   for (const book of books) {
     const imageLinks = book.volumeInfo.imageLinks;
-
     resultsContainer.innerHTML += `
     <div class="card" id="bookbox">
     <section class="textResults" id="txtSection">
@@ -81,7 +92,7 @@ function displayResults(books) {
     book.id
   }</span> </p> 
     <p class="info"><span class="leftspan">Authors :</span> <span class="text s-author rightspan"> ${
-      book.volumeInfo.authors
+      book.volumeInfo.authors[0]
     }</span> </p>
     <p class="info"><span class="leftspan">Description :</span> <span class="text s-desc rightspan"> ${
       book.volumeInfo.description
@@ -126,6 +137,7 @@ function loadData(title, author, start) {
 }
 
 addBookBtn.addEventListener("click", () => {
+  resultsContainer.classList.add("hidden");
   addBookBtn.classList.add("hidden");
   mainContainer.insertBefore(searchContainer, resultsContainer);
   mainContainer.removeChild(content);
@@ -140,6 +152,7 @@ addBookBtn.addEventListener("click", () => {
 });
 
 searchBtn.addEventListener("click", () => {
+  resultsContainer.classList.remove("hidden");
   resultsContainer.innerHTML = "";
   title = titleInput.value;
   author = authorInput.value;
@@ -147,6 +160,7 @@ searchBtn.addEventListener("click", () => {
 });
 
 cancelBtn.addEventListener("click", () => {
+  resultsContainer.classList.add("hidden");
   addBookBtn.classList.remove("hidden");
   mainContainer.insertBefore(content, resultsContainer);
   mainContainer.removeChild(searchContainer);
