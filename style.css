@@ -39,6 +39,15 @@ hr {
   font-family: "Kantumruy Pro", sans-serif;
 }
 
+.title {
+  margin: 0rem;
+}
+
+.logo {
+  width: 8rem;
+  height: 8rem;
+}
+
 .content-container {
   text-align: center;
 }
@@ -117,41 +126,60 @@ hr {
 
 .results-container {
   display: flex;
-  justify-content: center;
-  padding-left: 0.2px;
+  flex-direction: row;
+  justify-content: start;
+  padding-left: 0px;
   border-top: 1px solid #22b7a9;
   /* min-height: 667px; */
-  max-height: 23.2rem;
+  max-height: 25.5rem;
 
   /* border-top: 1px solid black; */
 }
 
 .scrolling-wrapper {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: auto;
-  /* scroll-padding-top: 150px; */
+  scroll-padding-top: 0.2em;
+  scroll-margin-top: 0.5em;
   /* height: 1080px; */
 }
 
 .card {
-  flex: 0 0 auto;
+  display: flex;
   flex-wrap: wrap;
-  font-family: "M PLUS 1 Code", sans-serif;
-  /* justify-content: space-evenly; */
-
+  flex-direction: column;
+  gap: 1px;
+  justify-content: start;
   border: 1px solid;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  /* min-width: 250px; */
   max-width: 335px;
   min-width: 335px;
-  height: 335px;
-  margin: 6px;
-  padding: 1.5%;
+  height: 380px;
+  margin: 5px;
+  padding: 1%;
   scroll-snap-align: start;
+}
+
+.card-icons {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+#before-click {
+  width: 1rem;
+  height: 1rem;
+}
+
+.results {
+  display: flex;
+  flex-direction: row;
 }
 
 .rightspan {
@@ -170,9 +198,23 @@ hr {
   display: none;
 }
 
-.textResults {
-  width: 100%;
+.imgResults {
+  /* display: flex; */
+  width: 30%;
   padding: 0%;
+  /* justify-content: start; */
+}
+
+.card-img {
+  margin: 0%;
+  padding: 0%;
+  width: 100%;
+}
+
+.textResults {
+  font-family: "M PLUS 1 Code", sans-serif;
+  width: 70%;
+  margin-left: 0.5rem;
 }
 
 .text {
@@ -209,17 +251,6 @@ hr {
 
 .rightspan {
   text-align: start;
-}
-
-.imgResults {
-  display: flex;
-  padding: 0%;
-  justify-content: center;
-}
-
-img {
-  height: 150px;
-  width: 100px;
 }
 
 /****NORMALIZE****/

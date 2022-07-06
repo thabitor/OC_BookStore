@@ -84,6 +84,15 @@ function displayResults(books) {
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
     <div class="card" id="bookbox">
+    <div class="card-icons">
+    <i class="fa-regular fa-bookmark" id="before-click"></i>
+    </div>
+    <div class="results">
+     <section class="imgResults" id="imgSection">
+    <img class ="card-img" src="${
+      imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"
+    }" />
+    </section>
     <section class="textResults" id="txtSection">
   <p class="info"> <span class="leftspan"> Title :</span> <span class="text s-title rightspan"> ${
     book.volumeInfo.title
@@ -98,9 +107,7 @@ function displayResults(books) {
       book.volumeInfo.description
     }</span> </p> 
     </section>
-    <section class="imgResults" id="imgSection">
-    <img src="${imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"}" />
-    </section>
+    </div>
     </div>`;
   }
 }
