@@ -21,6 +21,7 @@ const labelInputAuthor = document.createElement("label");
 const searchBtn = document.createElement("button");
 const cancelBtn = document.createElement("button");
 const hrLine = document.createElement("hr");
+const resultsTitle = document.createElement("h3");
 
 searchForm.setAttribute("class", "form-group");
 titleInput.setAttribute("type", "text");
@@ -75,17 +76,26 @@ const apiKey = "AIzaSyCc7mtocCRRD4toqVJrcV0AnVPPD6ca_Rw";
 const textbookBoxHTML = document.getElementById("txtSection");
 const imgbookBoxHTML = document.getElementById("imgSection");
 const authorsHTML = document.getElementsByClassName("s-author");
+const cardHTML = document.getElementsByClassName("card");
+
+const bookmarkBtnBefore = document.createElement("i");
+bookmarkBtnBefore.class = "fa-regular fa-bookmark before-click";
+const bookmarkBtnAfter = document.createElement("i");
+bookmarkBtnAfter.class = "fa-solid fa-bookmark after-click";
 
 let title;
 let author;
 
 function displayResults(books) {
+  resultsTitle.class = "results-title";
+  resultsTitle.innerHTML = `Search results for <i>${titleInput.value}</i>`;
+  mainContainer.insertBefore(resultsTitle, resultsContainer);
   for (const book of books) {
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
     <div class="card" id="bookbox">
     <div class="card-icons">
-    <i class="fa-regular fa-bookmark" id="before-click"></i>
+    <i class="fa-regular fa-bookmark"></i>
     </div>
     <div class="results">
      <section class="imgResults" id="imgSection">
@@ -145,6 +155,7 @@ function loadData(title, author, start) {
 
 addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
+  resultsContainer.classList.add("hidden");
   addBookBtn.classList.add("hidden");
   mainContainer.insertBefore(searchContainer, resultsContainer);
   mainContainer.removeChild(content);
@@ -159,6 +170,7 @@ addBookBtn.addEventListener("click", () => {
 });
 
 searchBtn.addEventListener("click", () => {
+  resultsTitle.classList.remove("hidden");
   resultsContainer.classList.remove("hidden");
   resultsContainer.innerHTML = "";
   title = titleInput.value;
@@ -167,6 +179,7 @@ searchBtn.addEventListener("click", () => {
 });
 
 cancelBtn.addEventListener("click", () => {
+  resultsTitle.classList.add("hidden");
   resultsContainer.classList.add("hidden");
   addBookBtn.classList.remove("hidden");
   mainContainer.insertBefore(content, resultsContainer);
