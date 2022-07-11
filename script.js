@@ -90,17 +90,18 @@ function displayResults(books) {
   resultsTitle.class = "results-title";
   resultsTitle.innerHTML = `Search results for <i>${titleInput.value}</i>`;
   mainContainer.insertBefore(resultsTitle, resultsContainer);
+  let i = 0;
   for (const book of books) {
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
-    <div class="card" id="bookbox">
+    <div class="card">
     <div class="card-icons">
-    <i class="fa-regular fa-bookmark"></i>
+    <i onclick="" class="fa-solid fa-bookmark" id="book${i}"></i>
     </div>
     <div class="results">
      <section class="imgResults" id="imgSection">
     <img class ="card-img" src="${
-      imageLinks ? imageLinks.thumbnail : "img/defaultbook.jpeg"
+      imageLinks ? imageLinks.thumbnail : "img/unavailable.png"
     }" />
     </section>
     <section class="textResults" id="txtSection">
@@ -119,7 +120,14 @@ function displayResults(books) {
     </section>
     </div>
     </div>`;
+    i++;
   }
+}
+
+function bookmarkFunction() {
+  let savedBook = document.getElementsByTagName("i");
+  savedBook = savedBook[i];
+  sessionStorage.setItem("bookId", `${savedBook.value}`);
 }
 
 function loadData(title, author, start) {
