@@ -96,7 +96,7 @@ function displayResults(books) {
     resultsContainer.innerHTML += `
     <div class="card">
     <div class="card-icons">
-    <i onclick="" class="fa-solid fa-bookmark" id="book${i}"></i>
+    <i onclick="${bookmarkFunction}" class="fa-regular fa-bookmark" id="book${i}"></i>
     </div>
     <div class="results">
      <section class="imgResults" id="imgSection">
@@ -124,11 +124,13 @@ function displayResults(books) {
   }
 }
 
-function bookmarkFunction() {
-  let savedBook = document.getElementsByTagName("i");
-  savedBook = savedBook[i];
-  sessionStorage.setItem("bookId", `${savedBook.value}`);
-}
+// bookmarkBtnBefore.addEventListener("onClick", () => {
+//   const savedBook = document.querySelectorAll("i");
+//   savedBook = savedBook[i];
+//   sessionStorage.setItem("bookId", `${savedBook.id}`);
+// });
+
+function bookmarkFunction() {}
 
 function loadData(title, author, start) {
   fetch(
