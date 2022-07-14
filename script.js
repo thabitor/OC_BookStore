@@ -3,7 +3,7 @@
 const mainContainer = document.getElementById("main-container");
 const headerContainer = document.getElementById("header-container");
 const resultsContainer = document.getElementById("results-container");
-const content = document.getElementById("content");
+const contentHTML = document.querySelector("#content");
 const addBookBtn = document.getElementsByClassName("btn")[0];
 
 const bookBoxHTML = document.getElementById("bookbox");
@@ -37,8 +37,8 @@ labelInputAuthor.setAttribute("for", "authorInput");
 searchBtnsContainer.setAttribute("class", "block-search-buttons");
 searchBtn.setAttribute("class", "block-search__btn green");
 cancelBtn.setAttribute("class", "block-search__btn red");
-searchContainer.class = "fixed-content";
-headerContainer.class = "fixed-content";
+searchContainer.class = "fixed-contentHTML";
+headerContainer.class = "fixed-contentHTML";
 searchBtn.id = "search-btn";
 cancelBtn.id = "cancel-btn";
 
@@ -78,25 +78,22 @@ const imgbookBoxHTML = document.getElementById("imgSection");
 const authorsHTML = document.getElementsByClassName("s-author");
 const cardHTML = document.getElementsByClassName("card");
 
-const bookmarkBtnBefore = document.createElement("i");
-bookmarkBtnBefore.class = "fa-regular fa-bookmark before-click";
-const bookmarkBtnAfter = document.createElement("i");
-bookmarkBtnAfter.class = "fa-solid fa-bookmark after-click";
-
 let title;
 let author;
 
 function displayResults(books) {
   resultsTitle.class = "results-title";
-  resultsTitle.innerHTML = `Search results for <i>${titleInput.value}</i>`;
+  resultsTitle.innerHTML = `<h3>Search results for <i>${titleInput.value}</i></h3>`;
   mainContainer.insertBefore(resultsTitle, resultsContainer);
+
   let i = 0;
   for (const book of books) {
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
-    <div class="card">
-    <div class="card-icons">
-    <i onclick="${bookmarkFunction}" class="fa-regular fa-bookmark" id="book${i}"></i>
+    <div class="card" id="book${i}">
+    <div class="card-icons" id="icon${i}">
+    <i onclick="bookmarkFunction('book${i}', 'bookmark${i}')" class="fa-regular fa-bookmark" id="bookmark${i}">
+    </i>
     </div>
     <div class="results">
      <section class="imgResults" id="imgSection">
@@ -112,10 +109,12 @@ function displayResults(books) {
     book.id
   }</span> </p> 
     <p class="info"><span class="leftspan">Authors :</span> <span class="text s-author rightspan"> ${
-      book.volumeInfo.authors[0]
+      book.volumeInfo.authors ? book.volumeInfo.authors[0] : "No authors found"
     }</span> </p>
     <p class="info"><span class="leftspan">Description :</span> <span class="text s-desc rightspan"> ${
       book.volumeInfo.description
+        ? book.volumeInfo.description
+        : "No description found"
     }</span> </p> 
     </section>
     </div>
@@ -124,13 +123,59 @@ function displayResults(books) {
   }
 }
 
-// bookmarkBtnBefore.addEventListener("onClick", () => {
-//   const savedBook = document.querySelectorAll("i");
-//   savedBook = savedBook[i];
-//   sessionStorage.setItem("bookId", `${savedBook.id}`);
-// });
+const regularMark = "fa-regular fa-bookmark";
+const solidMark = "fa-solid fa-bookmark";
+const unmarkedStatus = "unmarked";
+const markedStatus = "marked";
+const DEFAULT_STATUS = unmarkedStatus;
 
-function bookmarkFunction() {}
+const bookShelf = document.createElement("div");
+bookShelf.className = "bookShelf";
+const trashIcon = document.createElement("i");
+trashIcon.className = "fa-regular fa-trash-can";
+
+function bookmarkFunction(bookId, bookmarkId) {
+  var storedStatus = storedStatusFunc(bookId);
+  const markedBook = document.getElementById(bookId);
+  const markedBookClone = markedBook.cloneNode(true);
+  const cloneBookIconsDiv = markedBookClone.children[0];
+  const cloneIcon = cloneBookIconsDiv.children[0];
+  cloneBookIconsDiv.replaceChild(trashIcon, cloneIcon);
+
+  if (storedStatus === unmarkedStatus) {
+    document.getElementById(`${bookmarkId}`).classList.remove("fa-regular");
+    document.getElementById(`${bookmarkId}`).classList.add("fa-solid");
+    storedStatus = markedStatus;
+    bookShelf.appendChild(markedBookClone);
+  } else if (storedStatus === markedStatus) {
+    document.getElementById(`${bookmarkId}`).classList.add("fa-regular");
+    document.getElementById(`${bookmarkId}`).classList.remove("fa-solid");
+    storedStatus = unmarkedStatus;
+  }
+
+  mainContainer.appendChild(contentHTML);
+
+  while (!contentHTML.children[1]) {
+    contentHTML.appendChild(bookShelf);
+    resultsContainer.style.height = "415px";
+    contentHTML.style.height = "415px";
+  }
+  sessionStorage.setItem(`${bookId}`, `${storedStatus}`);
+}
+
+function storedStatusFunc(bookId) {
+  let storedStatus = sessionStorage.getItem(`${bookId}`);
+  if (!storedStatus) {
+    storedStatus = DEFAULT_STATUS;
+  }
+  sessionStorage.setItem(`${bookId}`, `${storedStatus}`);
+  return storedStatus;
+}
+
+//   document.getElementById(bookId).
+//   // TODO save the book search results to session storage
+//   // Add an argument that represents what they clicked - reference to the dom element
+// }
 
 function loadData(title, author, start) {
   fetch(
@@ -168,7 +213,7 @@ addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
   addBookBtn.classList.add("hidden");
   mainContainer.insertBefore(searchContainer, resultsContainer);
-  mainContainer.removeChild(content);
+  mainContainer.removeChild(contentHTML);
   searchContainer.appendChild(searchForm);
   searchContainer.appendChild(searchBtnsContainer);
   searchForm.appendChild(labelInputTitle);
@@ -192,7 +237,7 @@ cancelBtn.addEventListener("click", () => {
   resultsTitle.classList.add("hidden");
   resultsContainer.classList.add("hidden");
   addBookBtn.classList.remove("hidden");
-  mainContainer.insertBefore(content, resultsContainer);
+  mainContainer.insertBefore(contentHTML, resultsContainer);
   mainContainer.removeChild(searchContainer);
   resultsContainer.innerHTML = "";
 });

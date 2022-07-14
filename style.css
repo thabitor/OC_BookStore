@@ -4,7 +4,7 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  height: 100vh;
+  /* height: 100vh; */
   overflow: -moz-hidden-unscrollable;
 }
 
@@ -17,15 +17,18 @@ hr {
 }
 
 .main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
 
   font-weight: 800;
   /* width: 375px; */
-  height: device-height;
+  /* height: device-height; */
   width: 100%;
   min-width: 300px;
-  max-width: 768px;
-  height: 100vh;
+  /* max-width: 1024px; */
+  /* height: 100vh; */
   padding: 1%;
   overflow: -moz-hidden-unscrollable;
   /* scroll-behavior: snap; */
@@ -34,8 +37,10 @@ hr {
 .header-container {
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  /* width: 80%; */
   font-family: "Kantumruy Pro", sans-serif;
 }
 
@@ -49,7 +54,11 @@ hr {
 }
 
 .content-container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  /* height: fit-content; */
+  width: 100%;
+  align-items: center;
   font-family: "Kantumruy Pro", sans-serif;
 }
 
@@ -64,7 +73,11 @@ hr {
 .block-search {
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  /* flex-wrap: wrap; */
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 60%;
+
   height: 30%;
   font-family: "Kantumruy Pro", sans-serif;
 }
@@ -72,21 +85,31 @@ hr {
 .form-group {
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  /* column-gap: 10px; */
+  gap: 5px;
+  margin-bottom: 10px;
+  /* justify-items: flex-start; */
   justify-content: space-evenly;
   height: 100%;
   width: 100%;
 }
 
 .block-search__inputbox {
-  height: 18%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  height: 32px;
   border-radius: 6px;
+  min-width: 50px;
+  margin: 0;
 }
 
 .block-search-buttons {
   display: flex;
-  width: 28%;
-  height: 55%;
+  width: 25%;
+  min-width: fit-content;
+  height: 130px;
+  gap: 5px;
   justify-content: space-evenly;
   justify-items: center;
   flex-direction: column;
@@ -94,22 +117,28 @@ hr {
 }
 
 #cancel-btn {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
-.block-search__btn,
-.btn {
+.block-search__btn {
   color: white;
+  height: 55px;
   border-radius: 6px;
-  height: 50px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
   font-weight: 900;
 }
 
 .btn {
   width: 100px;
   font-size: 16px;
+  height: 50px;
+  color: white;
+  border-radius: 6px;
+
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 900;
 }
 
 .add-btn {
@@ -118,7 +147,7 @@ hr {
 }
 
 .green {
-  background-color: #4ac987;
+  background-color: #25c5b4;
 }
 
 .red {
@@ -132,21 +161,23 @@ h3,
   margin-bottom: 0.5rem;
 }
 
-.results-container {
+.results-container,
+.bookShelf {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding-left: 0px;
+  justify-content: center;
+  width: 100%;
+  padding-top: 3px;
   border-top: 1px solid #22b7a9;
-  /* min-height: 667px; */
-  max-height: 40.4vh;
-
+  height: 345px;
+  max-height: 430px;
   flex-wrap: wrap;
-  /* scroll-snap-type: y mandatory;
+
+  scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: auto;
-  scroll-padding-top: 0.2em;
-  scroll-margin-top: 0.5em; */
+  scroll-padding-top: 1px;
+  scroll-margin-top: 1px;
 }
 
 .card {
@@ -158,10 +189,11 @@ h3,
   border: 1px solid;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 355px; /* Change to Pixels */
-
-  height: 355px;
-  margin: 0.3rem;
+  background-color: azure;
+  border-radius: 6px;
+  width: 320px; /* Change to Pixels */
+  height: 320px;
+  margin: 3px;
   padding: 1%;
   scroll-snap-align: start;
 }
