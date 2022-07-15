@@ -83,7 +83,9 @@ let author;
 
 function displayResults(books) {
   resultsTitle.class = "results-title";
-  resultsTitle.innerHTML = `<h3>Search results for <i>${titleInput.value}</i></h3>`;
+  resultsTitle.innerHTML = `<h3>Search results for <i>${
+    titleInput.value ? titleInput.value : authorInput.value
+  }</i></h3>`;
   mainContainer.insertBefore(resultsTitle, resultsContainer);
 
   let i = 0;
@@ -133,6 +135,17 @@ const bookShelf = document.createElement("div");
 bookShelf.className = "bookShelf";
 const trashIcon = document.createElement("i");
 trashIcon.className = "fa-regular fa-trash-can";
+const bookShelfArray = [];
+// const trashIconClone = trashIcon.cloneNode(true);
+
+function isFound(array, bookId) {
+  array.some((element) => {
+    if (element.id === bookId) {
+      return true;
+    }
+    return false;
+  });
+}
 
 function bookmarkFunction(bookId, bookmarkId) {
   var storedStatus = storedStatusFunc(bookId);
@@ -140,17 +153,28 @@ function bookmarkFunction(bookId, bookmarkId) {
   const markedBookClone = markedBook.cloneNode(true);
   const cloneBookIconsDiv = markedBookClone.children[0];
   const cloneIcon = cloneBookIconsDiv.children[0];
-  cloneBookIconsDiv.replaceChild(trashIcon, cloneIcon);
 
   if (storedStatus === unmarkedStatus) {
     document.getElementById(`${bookmarkId}`).classList.remove("fa-regular");
     document.getElementById(`${bookmarkId}`).classList.add("fa-solid");
+
+    if (!bookShelfArray.some((e) => e.id === bookId)) {
+      bookShelfArray.push(markedBookClone);
+      bookShelf.appendChild(markedBookClone);
+      cloneBookIconsDiv.replaceChild(trashIcon.cloneNode(true), cloneIcon);
+      markedBookClone.id = `${bookId}M`;
+      markedBookClone.style.backgroundColor = "wheat";
+      console.log(bookShelfArray);
+    }
+
     storedStatus = markedStatus;
-    bookShelf.appendChild(markedBookClone);
   } else if (storedStatus === markedStatus) {
     document.getElementById(`${bookmarkId}`).classList.add("fa-regular");
     document.getElementById(`${bookmarkId}`).classList.remove("fa-solid");
+    const shelfedBook = document.getElementById(`${bookId}M`);
+    bookShelf.removeChild(shelfedBook);
     storedStatus = unmarkedStatus;
+    console.log(bookShelfArray);
   }
 
   mainContainer.appendChild(contentHTML);
