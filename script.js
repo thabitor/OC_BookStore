@@ -123,6 +123,8 @@ function displayResults(books) {
   }
 }
 
+window.onload = setShelfSession;
+
 const regularMark = "fa-regular fa-bookmark";
 const solidMark = "fa-solid fa-bookmark";
 const unmarkedStatus = "unmarked";
@@ -133,19 +135,6 @@ const bookShelf = document.createElement("div");
 bookShelf.className = "bookShelf";
 const trashIcon = document.createElement("i");
 trashIcon.className = "fa-regular fa-trash-can";
-const bookShelfArray = [];
-// const trashIconClone = trashIcon.cloneNode(true);
-
-// function isFound(array, bookId) {
-//   array.some((element) => {
-//     if (element.id === bookId) {
-//       return true;
-//     }
-//     return false;
-//   });
-// }
-
-window.onload = setShelfSession;
 
 function setShelfSession() {
   if (!sessionStorage.getItem("shelfSession")) {
@@ -204,11 +193,6 @@ function storedStatusFunc(bookId) {
   sessionStorage.setItem(`${bookId}`, `${storedStatus}`);
   return storedStatus;
 }
-
-//   document.getElementById(bookId).
-//   // TODO save the book search results to session storage
-//   // Add an argument that represents what they clicked - reference to the dom element
-// }
 
 function loadData(title, author, start) {
   fetch(
