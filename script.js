@@ -136,13 +136,23 @@ trashIcon.className = "fa-regular fa-trash-can";
 const bookShelfArray = [];
 // const trashIconClone = trashIcon.cloneNode(true);
 
-function isFound(array, bookId) {
-  array.some((element) => {
-    if (element.id === bookId) {
-      return true;
-    }
-    return false;
-  });
+// function isFound(array, bookId) {
+//   array.some((element) => {
+//     if (element.id === bookId) {
+//       return true;
+//     }
+//     return false;
+//   });
+// }
+
+window.onload = setShelfSession;
+
+function setShelfSession() {
+  if (!sessionStorage.getItem("shelfSession")) {
+    sessionStorage.setItem("shelfSession", contentHTML.innerHTML);
+  } else {
+    contentHTML.innerHTML = sessionStorage.getItem("shelfSession");
+  }
 }
 
 function bookmarkFunction(bookId, bookmarkId) {
@@ -164,7 +174,6 @@ function bookmarkFunction(bookId, bookmarkId) {
       markedBookClone.style.backgroundColor = "wheat";
       console.log(bookShelfArray);
     }
-
     storedStatus = markedStatus;
   } else if (storedStatus === markedStatus) {
     document.getElementById(`${bookmarkId}`).classList.add("fa-regular");
@@ -183,6 +192,8 @@ function bookmarkFunction(bookId, bookmarkId) {
     contentHTML.style.height = "415px";
   }
   sessionStorage.setItem(`${bookId}`, `${storedStatus}`);
+  const shelfState = sessionStorage.getItem("shelfSession");
+  sessionStorage.setItem("shelfSession", shelfState + bookShelf.innerHTML);
 }
 
 function storedStatusFunc(bookId) {
