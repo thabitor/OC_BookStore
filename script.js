@@ -123,7 +123,7 @@ function displayResults(books) {
   }
 }
 
-window.onload = setShelfSession;
+window.onload = setSessionContainer;
 
 const regularMark = "fa-regular fa-bookmark";
 const solidMark = "fa-solid fa-bookmark";
@@ -131,61 +131,67 @@ const unmarkedStatus = "unmarked";
 const markedStatus = "marked";
 const DEFAULT_STATUS = unmarkedStatus;
 
-const bookShelf = document.createElement("div");
-bookShelf.className = "bookShelf";
+const sessionBooksHTML = document.createElement("div");
+sessionBooksHTML.className = "bookShelf";
+contentHTML.appendChild(sessionBooksHTML);
 const trashIcon = document.createElement("i");
 trashIcon.className = "fa-regular fa-trash-can";
+const sessionBooksHTMLArray = [];
 
-function setShelfSession() {
-  if (!sessionStorage.getItem("shelfSession")) {
-    sessionStorage.setItem("shelfSession", contentHTML.innerHTML);
+sessionStorage.getItem("sessionBooks");
+const sessionContainer = sessionStorage.getItem("sessionContainer");
+const sessionBooks = sessionStorage.getItem("sessionBooks");
+
+function setSessionContainer() {
+  if (!sessionContainer) {
+    sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
+    sessionStorage.setItem("sessionBooks", sessionBooksHTML.innerHTML);
   } else {
-    contentHTML.innerHTML = sessionStorage.getItem("shelfSession");
+    contentHTML.innerHTML = sessionContainer;
+    // sessionBooksHTML.innerHTML = sessionBooks;
   }
 }
 
 function bookmarkFunction(bookId, bookmarkId) {
-  var storedStatus = storedStatusFunc(bookId);
+  mainContainer.appendChild(contentHTML);
+  contentHTML.appendChild(sessionBooksHTML);
+
+  var storedStatus = checkBookStatus(bookId);
   const markedBook = document.getElementById(bookId);
   const markedBookClone = markedBook.cloneNode(true);
   const cloneBookIconsDiv = markedBookClone.children[0];
   const cloneIcon = cloneBookIconsDiv.children[0];
 
+  resultsContainer.style.height = "400px";
+  contentHTML.style.height = "400px";
+
   if (storedStatus === unmarkedStatus) {
     document.getElementById(`${bookmarkId}`).classList.remove("fa-regular");
     document.getElementById(`${bookmarkId}`).classList.add("fa-solid");
 
-    if (!bookShelfArray.some((e) => e.id === bookId)) {
-      bookShelfArray.push(markedBookClone);
-      bookShelf.appendChild(markedBookClone);
+    if (!sessionBooksHTMLArray.some((e) => e.id === bookId)) {
+      sessionBooksHTMLArray.push(markedBookClone);
+      sessionBooksHTML.appendChild(markedBookClone);
       cloneBookIconsDiv.replaceChild(trashIcon.cloneNode(true), cloneIcon);
       markedBookClone.id = `${bookId}M`;
       markedBookClone.style.backgroundColor = "wheat";
-      console.log(bookShelfArray);
+      console.log(sessionBooksHTMLArray);
     }
     storedStatus = markedStatus;
   } else if (storedStatus === markedStatus) {
     document.getElementById(`${bookmarkId}`).classList.add("fa-regular");
     document.getElementById(`${bookmarkId}`).classList.remove("fa-solid");
     const shelfedBook = document.getElementById(`${bookId}M`);
-    bookShelf.removeChild(shelfedBook);
+    sessionBooksHTML.removeChild(shelfedBook);
     storedStatus = unmarkedStatus;
-    console.log(bookShelfArray);
   }
 
-  mainContainer.appendChild(contentHTML);
-
-  while (!contentHTML.children[1]) {
-    contentHTML.appendChild(bookShelf);
-    resultsContainer.style.height = "415px";
-    contentHTML.style.height = "415px";
-  }
   sessionStorage.setItem(`${bookId}`, `${storedStatus}`);
-  const shelfState = sessionStorage.getItem("shelfSession");
-  sessionStorage.setItem("shelfSession", shelfState + bookShelf.innerHTML);
+  sessionStorage.setItem("sessionBooks", sessionBooksHTML.innerHTML);
+  sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
 }
 
-function storedStatusFunc(bookId) {
+function checkBookStatus(bookId) {
   let storedStatus = sessionStorage.getItem(`${bookId}`);
   if (!storedStatus) {
     storedStatus = DEFAULT_STATUS;
