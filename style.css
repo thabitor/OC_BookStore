@@ -64,15 +64,13 @@ hr {
   font-family: "Kantumruy Pro", sans-serif;
 }
 
-
-
-.fixed-content {
+/* .fixed-content {
   top: 0;
   bottom: 0;
   position: fixed;
   overflow-y: hidden;
   overflow-x: hidden;
-}
+} */
 
 .block-search {
   display: flex;
@@ -82,7 +80,7 @@ hr {
   align-items: flex-start;
   width: 60%;
 
-  height: 30%;
+  /* height: 30%; */
   font-family: "Kantumruy Pro", sans-serif;
 }
 
@@ -173,15 +171,15 @@ h3,
   width: 100%;
   padding-top: 3px;
   border-top: 1px solid #22b7a9;
-  min-height: 360px;
-  max-height: 430px;
+  /* min-height: 360px; */
+  /* max-height: 430px; */
   flex-wrap: wrap;
 
-  scroll-snap-type: y mandatory;
+  /* scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: auto;
   scroll-padding-top: 1px;
-  scroll-margin-top: 1px;
+  scroll-margin-top: 1px; */
 }
 
 .card {
