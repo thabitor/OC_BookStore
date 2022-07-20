@@ -88,11 +88,12 @@ function displayResults(books) {
 
   let i = 0;
   for (const book of books) {
+    var storedStatus = checkBookStatus(book.id);
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
-    <div class="card" id="book${i}">
+    <div class="card ${storedStatus}" id="${book.id}">
     <div class="card-icons" id="icon${i}">
-    <i onclick="bookmarkFunction('book${i}', 'bookmark${i}')" class="fa-regular fa-bookmark" id="bookmark${i}">
+    <i onclick="bookmarkFunction('${book.id}', 'BK-${book.id}')" class="${storedStatus === "marked" ? "fa-solid" : "fa-regular"} fa-bookmark" id="BK-${book.id}">
     </i>
     </div>
     <div class="results">
@@ -125,8 +126,9 @@ function displayResults(books) {
 
 window.onload = setSessionContainer;
 
-const regularMark = "fa-regular fa-bookmark";
-const solidMark = "fa-solid fa-bookmark";
+const regularMark = "fa-regular";
+const solidMark = "fa-solid";  
+
 const unmarkedStatus = "unmarked";
 const markedStatus = "marked";
 const DEFAULT_STATUS = unmarkedStatus;
@@ -148,13 +150,18 @@ function setSessionContainer() {
     sessionStorage.setItem("sessionBooks", sessionBooksHTML.innerHTML);
   } else {
     contentHTML.innerHTML = sessionContainer;
-    // sessionBooksHTML.innerHTML = sessionBooks;
   }
 }
 
 function bookmarkFunction(bookId, bookmarkId) {
-  mainContainer.appendChild(contentHTML);
-  contentHTML.appendChild(sessionBooksHTML);
+ 
+  if(sessionBooksHTMLArray.length === 0) {
+    mainContainer.appendChild(contentHTML);
+    contentHTML.appendChild(sessionBooksHTML);
+  } else {
+    mainContainer.appendChild(contentHTML);
+    
+  }
 
   var storedStatus = checkBookStatus(bookId);
   const markedBook = document.getElementById(bookId);
@@ -162,27 +169,26 @@ function bookmarkFunction(bookId, bookmarkId) {
   const cloneBookIconsDiv = markedBookClone.children[0];
   const cloneIcon = cloneBookIconsDiv.children[0];
 
-  resultsContainer.style.height = "400px";
-  contentHTML.style.height = "400px";
+  resultsContainer.style.height = "380px";
+  contentHTML.style.height = "380px";
 
   if (storedStatus === unmarkedStatus) {
-    document.getElementById(`${bookmarkId}`).classList.remove("fa-regular");
-    document.getElementById(`${bookmarkId}`).classList.add("fa-solid");
-
+    document.getElementById(`${bookmarkId}`).classList.replace("fa-regular", "fa-solid");
     if (!sessionBooksHTMLArray.some((e) => e.id === bookId)) {
       sessionBooksHTMLArray.push(markedBookClone);
       sessionBooksHTML.appendChild(markedBookClone);
       cloneBookIconsDiv.replaceChild(trashIcon.cloneNode(true), cloneIcon);
-      markedBookClone.id = `${bookId}M`;
-      markedBookClone.style.backgroundColor = "wheat";
+      markedBook.classList.replace("unmarked","marked");  
+      markedBookClone.classList.replace("unmarked","marked"); 
       console.log(sessionBooksHTMLArray);
     }
     storedStatus = markedStatus;
   } else if (storedStatus === markedStatus) {
-    document.getElementById(`${bookmarkId}`).classList.add("fa-regular");
-    document.getElementById(`${bookmarkId}`).classList.remove("fa-solid");
-    const shelfedBook = document.getElementById(`${bookId}M`);
+    document.getElementById(`${bookmarkId}`).classList.replace("fa-solid", "fa-regular");
+    const shelfedBook = document.getElementById(`${bookId}`);
     sessionBooksHTML.removeChild(shelfedBook);
+    markedBook.classList.replace("marked","unmarked");  
+    shelfedBook.classList.replace("marked","unmarked");
     storedStatus = unmarkedStatus;
   }
 
