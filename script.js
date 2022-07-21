@@ -182,11 +182,7 @@ function bookmarkFunction(bookId, bookmarkId) {
     document
       .getElementById(`${bookmarkId}`)
       .classList.replace("fa-solid", "fa-regular");
-    // if(bookShelfHTMLArray.length === 1) {
-
-    // }
     document.getElementById("bookshelfId").removeChild(shelfedBook);
-    // bookShelfHTML.innerHTML -= shelfedBook;
     markedBook.classList.replace("marked", "unmarked");
     storedStatus = unmarkedStatus;
   }
