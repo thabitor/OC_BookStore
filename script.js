@@ -145,17 +145,17 @@ function setSessionContainer() {
   if (sessionBooks === null) {
     sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
     sessionStorage.setItem("sessionBooks", bookShelfHTML.innerHTML);
-    sessionStorage.setItem("session", "New");
+    sessionStorage.setItem("Session", "new");
+    contentHTML.appendChild(bookShelfHTML);
   } else {
     contentHTML.innerHTML = sessionContainer;
-    sessionStorage.setItem("session", "Active");
+    sessionStorage.setItem("Session", "active");
   }
 }
 
 function bookmarkFunction(bookId, bookmarkId) {
-  if (sessionStorage.getItem("session") === "New") {
-    contentHTML.appendChild(bookShelfHTML);
-    sessionStorage.setItem("session", "Active");
+  if (sessionStorage.getItem("Session") === "new") {
+    sessionStorage.setItem("Session", "active");
   }
 
   var storedStatus = checkBookStatus(bookId);
@@ -171,7 +171,7 @@ function bookmarkFunction(bookId, bookmarkId) {
       .classList.replace("fa-regular", "fa-solid");
     if (!bookShelfHTMLArray.some((e) => e.id === bookId)) {
       bookShelfHTMLArray.push(markedBookClone);
-      bookShelfHTML.appendChild(markedBookClone);
+      document.getElementById("bookshelfId").appendChild(markedBookClone);
       cloneBookIconsDiv.replaceChild(trashIcon.cloneNode(true), cloneIcon);
       markedBook.classList.replace("unmarked", "marked");
       markedBookClone.classList.replace("unmarked", "marked");
@@ -182,7 +182,11 @@ function bookmarkFunction(bookId, bookmarkId) {
     document
       .getElementById(`${bookmarkId}`)
       .classList.replace("fa-solid", "fa-regular");
+    // if(bookShelfHTMLArray.length === 1) {
+
+    // }
     document.getElementById("bookshelfId").removeChild(shelfedBook);
+    // bookShelfHTML.innerHTML -= shelfedBook;
     markedBook.classList.replace("marked", "unmarked");
     storedStatus = unmarkedStatus;
   }
