@@ -236,15 +236,29 @@ function loadData(title, author, start) {
     });
 }
 
+// document.getElementsByClassName("fa-trash-can").addEventListener("click", function(e, bookId) {
+//   if (e.target.id === `TR-${bookId}`) {
+//     var mbook = document.getElementById(`${bookId}`);
+//     document.getElementById("bookshelfId").removeChild(mbook);
+//   }
+// });
+
 function deleteFunction(bookId) {
-  // storedStatus = checkBookStatus(bookId);
-  // document
-  //   .getElementById(`${bookmarkId}`)
-  //   .classList.replace("fa-solid", "fa-regular");
-  // document.getElementById(bookId).classList.replace("marked", "unmarked");
-  document
-    .getElementById("bookshelfId")
-    .removeChild(document.getElementById(`${bookId}`));
+  // const trashIconClass = document.getElementsByClassName("fa-trash-can");
+  // const  trashIconHTML = document.getElementById(`TR-${bookId}`);
+
+  // trashIconHTML.addEventListener("click", function(e) {
+
+  //   e.target
+
+  // })
+  // // storedStatus = checkBookStatus(bookId);
+  // // document
+  // //   .getElementById(`${bookmarkId}`)
+  // //   .classList.replace("fa-solid", "fa-regular");
+  // // document.getElementById(bookId).classList.replace("marked", "unmarked");
+  var mbook = document.getElementById(`${bookId}`);
+  document.getElementById("bookshelfId").removeChild(mbook);
   // storedStatus = unmarkedStatus;
 }
 
@@ -282,16 +296,16 @@ cancelBtn.addEventListener("click", () => {
   resultsContainer.innerHTML = "";
 });
 
-trashIcon.addEventListener("click", () => {
-  document
-    .getElementById(`${bookmarkId}`)
-    .classList.replace("fa-solid", "fa-regular");
-  document
-    .getElementById("bookshelfId")
-    .removeChild(document.getElementById(`${book.id}00M`));
-  markedBook.classList.replace("marked", "unmarked");
-  storedStatus = unmarkedStatus;
-});
+// trashIcon.addEventListener("click", () => {
+//   document
+//     .getElementById(`${bookmarkId}`)
+//     .classList.replace("fa-solid", "fa-regular");
+//   document
+//     .getElementById("bookshelfId")
+//     .removeChild(document.getElementById(`${book.id}00M`));
+//   markedBook.classList.replace("marked", "unmarked");
+//   storedStatus = unmarkedStatus;
+// });
 
 nextBtn.addEventListener("click", (e) => {
   resultsContainer.innerHTML = "";

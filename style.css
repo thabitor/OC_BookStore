@@ -171,8 +171,6 @@ h3,
   width: 100%;
   padding-top: 3px;
   border-top: 1px solid #22b7a9;
-  /* min-height: 360px; */
-  /* max-height: 430px; */
   flex-wrap: wrap;
 
   /* scroll-snap-type: y mandatory;
