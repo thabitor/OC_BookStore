@@ -93,9 +93,9 @@ function displayResults(books) {
     resultsContainer.innerHTML += `
     <div class="card ${storedStatus}" id="${book.id}">
     <div class="card-icons" id="icon${i}">
-    <i onclick="bookmarkFunction('${book.id}', 'BK-${book.id}')" class="${
+    <i onclick="bookmarkFunction('${book.id}', 'BM${book.id}')" class="${
       storedStatus === "marked" ? "fa-solid" : "fa-regular"
-    } fa-bookmark" id="BK-${book.id}">
+    } fa-bookmark" id='BM${book.id}'>
     </i>
     </div>
     <div class="results">
@@ -164,6 +164,9 @@ function bookmarkFunction(bookId, bookmarkId) {
   var shelfedBook = document.getElementById(`${bookId}00M`);
   const cloneBookIconsDiv = markedBookClone.children[0];
   const cloneIcon = cloneBookIconsDiv.children[0];
+  var trashIconClone = trashIcon.cloneNode(true);
+  trashIconClone.setAttribute("id", `TR-${bookId}`);
+  trashIconClone.setAttribute("onclick", `deleteFunction(${bookId}00M);`);
 
   if (storedStatus === unmarkedStatus) {
     document
@@ -172,12 +175,12 @@ function bookmarkFunction(bookId, bookmarkId) {
     if (!bookShelfHTMLArray.some((e) => e.id === bookId)) {
       bookShelfHTMLArray.push(markedBookClone);
       document.getElementById("bookshelfId").appendChild(markedBookClone);
-      cloneBookIconsDiv.replaceChild(trashIcon.cloneNode(true), cloneIcon);
+      cloneBookIconsDiv.replaceChild(trashIconClone, cloneIcon);
       markedBook.classList.replace("unmarked", "marked");
       markedBookClone.classList.replace("unmarked", "marked");
       markedBookClone.id = `${bookId}00M`;
+      storedStatus = markedStatus;
     }
-    storedStatus = markedStatus;
   } else if (storedStatus === markedStatus) {
     document
       .getElementById(`${bookmarkId}`)
@@ -233,6 +236,18 @@ function loadData(title, author, start) {
     });
 }
 
+function deleteFunction(bookId) {
+  // storedStatus = checkBookStatus(bookId);
+  // document
+  //   .getElementById(`${bookmarkId}`)
+  //   .classList.replace("fa-solid", "fa-regular");
+  // document.getElementById(bookId).classList.replace("marked", "unmarked");
+  document
+    .getElementById("bookshelfId")
+    .removeChild(document.getElementById(`${bookId}`));
+  // storedStatus = unmarkedStatus;
+}
+
 addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
   resultsContainer.classList.add("hidden");
@@ -265,6 +280,17 @@ cancelBtn.addEventListener("click", () => {
   mainContainer.insertBefore(contentHTML, resultsContainer);
   mainContainer.removeChild(searchContainer);
   resultsContainer.innerHTML = "";
+});
+
+trashIcon.addEventListener("click", () => {
+  document
+    .getElementById(`${bookmarkId}`)
+    .classList.replace("fa-solid", "fa-regular");
+  document
+    .getElementById("bookshelfId")
+    .removeChild(document.getElementById(`${book.id}00M`));
+  markedBook.classList.replace("marked", "unmarked");
+  storedStatus = unmarkedStatus;
 });
 
 nextBtn.addEventListener("click", (e) => {
