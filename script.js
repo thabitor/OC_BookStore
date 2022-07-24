@@ -138,7 +138,7 @@ const sessionContainer = sessionStorage.getItem("sessionContainer");
 const sessionBooks = sessionStorage.getItem("sessionBooks");
 const bookShelfHTML = document.createElement("div");
 bookShelfHTML.className = "bookShelf";
-bookShelfHTML.id = "bookshelfId";
+bookShelfHTML.id = "bookshelf00";
 const bookShelfHTMLArray = [];
 
 function setSessionContainer() {
@@ -236,6 +236,12 @@ function loadData(title, author, start) {
     });
 }
 
+var stringToHTML = function (str) {
+	var parser = new DOMParser();
+	var doc = parser.parseFromString(str, 'text/html');
+	return doc.body;
+};
+
 // document.getElementsByClassName("fa-trash-can").addEventListener("click", function(e, bookId) {
 //   if (e.target.id === `TR-${bookId}`) {
 //     var mbook = document.getElementById(`${bookId}`);
@@ -244,6 +250,12 @@ function loadData(title, author, start) {
 // });
 
 function deleteFunction(bookId) {
+
+  var bookShelf = document.getElementById("bookshelfId");
+  console.log(bookShelf.hasChildNodes);
+  console.log(bookShelf.childNodes);
+  bookShelf.removeChild(document.getElementById(bookId));
+}
   // const trashIconClass = document.getElementsByClassName("fa-trash-can");
   // const  trashIconHTML = document.getElementById(`TR-${bookId}`);
 
@@ -257,10 +269,11 @@ function deleteFunction(bookId) {
   // //   .getElementById(`${bookmarkId}`)
   // //   .classList.replace("fa-solid", "fa-regular");
   // // document.getElementById(bookId).classList.replace("marked", "unmarked");
-  var mbook = document.getElementById(`${bookId}`);
-  document.getElementById("bookshelfId").removeChild(mbook);
-  // storedStatus = unmarkedStatus;
-}
+ 
+  // var mbook = bookShelf.childNodes.id = `${bookId}`;
+  // console.log(mbook);
+  
+
 
 addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
