@@ -168,24 +168,27 @@ function bookmarkFunction(bookId, bookmarkId) {
   trashIconClone.setAttribute("id", `TR-${bookId}`);
   trashIconClone.setAttribute("onclick", `deleteFunction(${bookId}00M);`);
 
+  const markedBookCloneNode = document.createElement("div");
+  markedBookCloneNode.innerHTML = markedBookClone;
+
   if (storedStatus === unmarkedStatus) {
     document
       .getElementById(`${bookmarkId}`)
       .classList.replace("fa-regular", "fa-solid");
     if (!bookShelfHTMLArray.some((e) => e.id === bookId)) {
       bookShelfHTMLArray.push(markedBookClone);
-      document.getElementById("bookshelfId").appendChild(markedBookClone);
       cloneBookIconsDiv.replaceChild(trashIconClone, cloneIcon);
       markedBook.classList.replace("unmarked", "marked");
       markedBookClone.classList.replace("unmarked", "marked");
       markedBookClone.id = `${bookId}00M`;
+      document.getElementById("bookshelf00").appendChild(markedBookClone);
       storedStatus = markedStatus;
     }
   } else if (storedStatus === markedStatus) {
     document
       .getElementById(`${bookmarkId}`)
       .classList.replace("fa-solid", "fa-regular");
-    document.getElementById("bookshelfId").removeChild(shelfedBook);
+    document.getElementById("bookshelf00").removeChild(shelfedBook);
     markedBook.classList.replace("marked", "unmarked");
     storedStatus = unmarkedStatus;
   }
@@ -251,10 +254,10 @@ var stringToHTML = function (str) {
 
 function deleteFunction(bookId) {
 
-  var bookShelf = document.getElementById("bookshelfId");
+  const bookShelf = document.getElementById("bookshelf00");
   console.log(bookShelf.hasChildNodes);
   console.log(bookShelf.childNodes);
-  bookShelf.removeChild(document.getElementById(bookId));
+  bookShelf.removeChild(document.getElementById(`${bookId}`));
 }
   // const trashIconClass = document.getElementsByClassName("fa-trash-can");
   // const  trashIconHTML = document.getElementById(`TR-${bookId}`);
