@@ -52,17 +52,6 @@ cancelBtn.innerHTML = "Cancel";
 
 //Event Listeners
 
-const pageBtnsDiv = document.createElement("div");
-pageBtnsDiv.classList.add("page-btns-container");
-const nextBtn = document.createElement("button");
-nextBtn.class = "page-btn";
-nextBtn.innerHTML = "next >>";
-const prevBtn = document.createElement("button");
-prevBtn.class = "page-btn";
-prevBtn.innerHTML = "<< back";
-pageBtnsDiv.appendChild(prevBtn);
-pageBtnsDiv.appendChild(nextBtn);
-
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
 
@@ -139,8 +128,6 @@ bookShelfHTML.id = "bookshelf00";
 const bookShelfHTMLArray = [];
 
 function setSessionContainer() {
-  // var savedBook = document.getElementById(`${bookId}`);
-
   if (sessionBooks === null) {
     sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
     sessionStorage.setItem("sessionBooks", bookShelfHTML.innerHTML);
@@ -241,7 +228,6 @@ function loadData(title, author, start) {
 }
 
 function deleteFunction(bookId, originalBookId, bookmarkId) {
-  // let storedStatus = checkBookStatus(originalBookId);
   var savedBook = document.getElementById(`${bookId}`);
   const bookShelfState = document.getElementById("bookshelf00");
   console.log(savedBook);
@@ -290,18 +276,4 @@ cancelBtn.addEventListener("click", () => {
   mainContainer.insertBefore(contentHTML, resultsContainer);
   mainContainer.removeChild(searchContainer);
   resultsContainer.innerHTML = "";
-});
-
-nextBtn.addEventListener("click", (e) => {
-  resultsContainer.innerHTML = "";
-  offset += 15;
-  console.log(e.target.innerText);
-  loadData(title, author, offset);
-});
-
-prevBtn.addEventListener("click", (e) => {
-  resultsContainer.innerHTML = "";
-  offset -= 15;
-  console.log(e.target.innerText);
-  loadData(title, author, offset);
 });

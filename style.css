@@ -4,13 +4,8 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* height: 100vh; */
   overflow: -moz-hidden-unscrollable;
 }
-
-/* h1 {
-  background-color: whitesmoke;
-} */
 
 hr {
   color: rgba(0, 0, 0, 0.2);
@@ -21,26 +16,18 @@ hr {
   flex-direction: column;
   align-items: center;
   background-color: white;
-
   font-weight: 800;
-  /* width: 375px; */
-  /* height: device-height; */
   width: 100%;
   min-width: 300px;
-  /* max-width: 1024px; */
-  /* height: 100vh; */
   padding: 1%;
   overflow: -moz-hidden-unscrollable;
-  /* scroll-behavior: snap; */
 }
 
 .header-container {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   align-items: center;
   justify-content: center;
-  /* width: 80%; */
   font-family: "Kantumruy Pro", sans-serif;
 }
 
@@ -58,39 +45,25 @@ hr {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  /* height: fit-content; */
   width: 100%;
   align-items: center;
   font-family: "Kantumruy Pro", sans-serif;
 }
 
-/* .fixed-content {
-  top: 0;
-  bottom: 0;
-  position: fixed;
-  overflow-y: hidden;
-  overflow-x: hidden;
-} */
-
 .block-search {
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
   justify-content: flex-start;
   align-items: flex-start;
   width: 60%;
-
-  /* height: 30%; */
   font-family: "Kantumruy Pro", sans-serif;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  /* column-gap: 10px; */
   gap: 5px;
   margin-bottom: 10px;
-  /* justify-items: flex-start; */
   justify-content: space-evenly;
   height: 100%;
   width: 100%;
@@ -172,25 +145,18 @@ h3,
   padding-top: 3px;
   border-top: 1px solid #22b7a9;
   flex-wrap: wrap;
-
-  /* scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  scroll-behavior: auto;
-  scroll-padding-top: 1px;
-  scroll-margin-top: 1px; */
 }
 
 .card {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  /* gap: 1px; */
   justify-content: start;
   border: 1px solid;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 6px;
-  width: 320px; /* Change to Pixels */
+  width: 320px;
   height: 320px;
   margin: 3px;
   padding: 1%;
@@ -241,10 +207,8 @@ h3,
 }
 
 .imgResults {
-  /* display: flex; */
   width: 30%;
   padding: 0%;
-  /* justify-content: start; */
 }
 
 .card-img {
@@ -264,7 +228,6 @@ h3,
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3; /* number of lines to show */
-  line-clamp: 3;
   -webkit-box-orient: vertical;
   margin: 0%;
   padding: 0%;
@@ -275,7 +238,6 @@ h3,
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1; /* number of lines to show */
-  line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 
@@ -294,5 +256,3 @@ h3,
 .rightspan {
   text-align: start;
 }
-
-/* Mobile-first app - if you need to make the width wider, add a media query */
