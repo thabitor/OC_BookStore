@@ -19,7 +19,7 @@ const labelInputTitle = document.createElement("label");
 const labelInputAuthor = document.createElement("label");
 const searchBtn = document.createElement("button");
 const cancelBtn = document.createElement("button");
-const resultsTitle = document.createElement("h3");
+const resultsTitle = document.createElement("h2");
 
 searchForm.setAttribute("class", "form-group");
 titleInput.setAttribute("type", "text");

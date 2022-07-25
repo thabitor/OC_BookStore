@@ -47,7 +47,7 @@ hr {
   justify-content: center;
   width: 100%;
   align-items: center;
-  font-family: "Kantumruy Pro", sans-serif;
+  font-family: "Ibarra Real Nova", serif;
 }
 
 .block-search {
@@ -56,7 +56,7 @@ hr {
   justify-content: flex-start;
   align-items: flex-start;
   width: 60%;
-  font-family: "Kantumruy Pro", sans-serif;
+  font-family: "Ibarra Real Nova", serif;
 }
 
 .form-group {
@@ -129,9 +129,9 @@ hr {
   background-color: #e0574b;
 }
 
-h3,
+h2,
 .results-title {
-  font-family: "Kantumruy Pro", sans-serif;
+  font-family: "Ibarra Real Nova", serif;
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -218,7 +218,7 @@ h3,
 }
 
 .textResults {
-  font-family: "M PLUS 1 Code", sans-serif;
+  font-family: "Ibarra Real Nova", serif;
   width: 70%;
   margin-left: 0.5rem;
 }
@@ -227,7 +227,7 @@ h3,
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-line-clamp: 5; /* number of lines to show */
   -webkit-box-orient: vertical;
   margin: 0%;
   padding: 0%;
@@ -248,7 +248,7 @@ h3,
 }
 
 .leftspan {
-  font-weight: 700;
+  font-weight: 900;
   text-align: left;
   padding-bottom: 0.5%;
 }
