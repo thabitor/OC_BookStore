@@ -6,7 +6,6 @@ const resultsContainer = document.getElementById("results-container");
 const contentHTML = document.querySelector("#content");
 const addBookBtn = document.getElementsByClassName("btn")[0];
 
-const bookBoxHTML = document.getElementById("bookbox");
 const searchContainer = document.getElementById("search-container");
 
 // Elements created
@@ -20,7 +19,6 @@ const labelInputTitle = document.createElement("label");
 const labelInputAuthor = document.createElement("label");
 const searchBtn = document.createElement("button");
 const cancelBtn = document.createElement("button");
-const hrLine = document.createElement("hr");
 const resultsTitle = document.createElement("h3");
 
 searchForm.setAttribute("class", "form-group");
@@ -37,8 +35,6 @@ labelInputAuthor.setAttribute("for", "authorInput");
 searchBtnsContainer.setAttribute("class", "block-search-buttons");
 searchBtn.setAttribute("class", "block-search__btn green");
 cancelBtn.setAttribute("class", "block-search__btn red");
-searchContainer.class = "fixed-contentHTML";
-headerContainer.class = "fixed-contentHTML";
 searchBtn.id = "search-btn";
 cancelBtn.id = "cancel-btn";
 
@@ -50,26 +46,20 @@ labelInputTitle.innerHTML = "Title";
 searchBtn.innerHTML = "Search";
 cancelBtn.innerHTML = "Cancel";
 
-//Event Listeners
+// Functions
 
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
-
 const apiKey = "AIzaSyCc7mtocCRRD4toqVJrcV0AnVPPD6ca_Rw";
-
-const textbookBoxHTML = document.getElementById("txtSection");
-const imgbookBoxHTML = document.getElementById("imgSection");
-const authorsHTML = document.getElementsByClassName("s-author");
-const cardHTML = document.getElementsByClassName("card");
 
 let title;
 let author;
 
 function displayResults(books) {
   resultsTitle.class = "results-title";
-  resultsTitle.innerHTML = `<h3>Search results for <i>${
+  resultsTitle.innerHTML = `Search results for <i>${
     titleInput.value ? titleInput.value : authorInput.value
-  }</i></h3>`;
+  }</i>`;
   mainContainer.insertBefore(resultsTitle, resultsContainer);
 
   let i = 0;
@@ -78,24 +68,24 @@ function displayResults(books) {
     const imageLinks = book.volumeInfo.imageLinks;
     resultsContainer.innerHTML += `
     <div class="card ${storedStatus}" id="${book.id}">
-    <div class="card-icons" id="icon${i}">
+    <div class="card-icons">
     <i onclick="bookmarkFunction('${book.id}', 'BM${book.id}')" class="${
       storedStatus === "marked" ? "fa-solid" : "fa-regular"
     } fa-bookmark" id='BM${book.id}'>
     </i>
     </div>
     <div class="results">
-     <section class="imgResults" id="imgSection">
+     <section class="imgResults">
     <img class ="card-img" src="${
       imageLinks ? imageLinks.thumbnail : "img/unavailable.png"
-    }" />
+    }" alt="${book.volumeInfo.title}"/>
     </section>
-    <section class="textResults" id="txtSection">
+    <section class="textResults">
   <p class="info"> <span class="leftspan"> Title :</span> <span class="text s-title rightspan"> ${
     book.volumeInfo.title
   }</span> </p>
-  <p class="info"><span class="leftspan">ID :</span> <span class="text s-bookid rightspan"> ${
-    book.id
+  <p class="info"><span class="leftspan">ISBN :</span> <span class="text s-bookid rightspan"> ${
+    book.volumeInfo.industryIdentifiers[0].identifier
   }</span> </p> 
     <p class="info"><span class="leftspan">Authors :</span> <span class="text s-author rightspan"> ${
       book.volumeInfo.authors ? book.volumeInfo.authors[0] : "No authors found"
@@ -103,7 +93,7 @@ function displayResults(books) {
     <p class="info"><span class="leftspan">Description :</span> <span class="text s-desc rightspan"> ${
       book.volumeInfo.description
         ? book.volumeInfo.description
-        : "No description found"
+        : "Information missing"
     }</span> </p> 
     </section>
     </div>
@@ -111,6 +101,8 @@ function displayResults(books) {
     i++;
   }
 }
+
+// Onload function (at start of page or after refresh)
 
 window.onload = setSessionContainer;
 
@@ -196,6 +188,8 @@ function checkBookStatus(bookId) {
   return storedStatus;
 }
 
+const authorsHTML = document.getElementsByClassName("s-author");
+
 function loadData(title, author, start) {
   fetch(
     URLbooks.replace("__title__", title)
@@ -243,6 +237,8 @@ function deleteFunction(bookId, originalBookId, bookmarkId) {
   sessionStorage.setItem("sessionBooks", bookShelfState.innerHTML);
   sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
 }
+
+// Event Listeners
 
 addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
