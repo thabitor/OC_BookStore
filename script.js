@@ -63,9 +63,6 @@ prevBtn.innerHTML = "<< back";
 pageBtnsDiv.appendChild(prevBtn);
 pageBtnsDiv.appendChild(nextBtn);
 
-// cut down on URLs - u need only one.
-// You can use templated strings
-
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
 
@@ -163,9 +160,9 @@ function bookmarkFunction(bookId, bookmarkId) {
   var storedStatus = checkBookStatus(bookId);
   const markedBook = document.getElementById(bookId);
   const markedBookClone = document.createElement("div");
-  markedBookClone.innerHTML = markedBook.innerHTML;
   markedBookClone.classList.add("card");
   markedBookClone.classList.add("marked");
+  markedBookClone.innerHTML = markedBook.innerHTML;
   markedBookClone.id = `${bookId}00M`;
   const cloneBookIconsDiv = markedBookClone.children[0];
   const cloneIcon = cloneBookIconsDiv.children[0];
@@ -179,7 +176,10 @@ function bookmarkFunction(bookId, bookmarkId) {
       markedBook.classList.replace("unmarked", "marked");
       document.getElementById("bookshelf00").appendChild(markedBookClone);
       cloneIcon.setAttribute("id", `TR-${bookId}`);
-      cloneIcon.setAttribute("onclick", `deleteFunction(${bookId}00M);`);
+      cloneIcon.setAttribute(
+        "onclick",
+        `deleteFunction("${bookId}00M", "${bookId}", "${bookmarkId}");`
+      );
       cloneIcon.className = "fa-regular fa-trash-can";
       storedStatus = markedStatus;
     }
@@ -240,11 +240,23 @@ function loadData(title, author, start) {
     });
 }
 
-var stringToHTML = function (str) {
-  var parser = new DOMParser();
-  var doc = parser.parseFromString(str, "text/html");
-  return doc.body;
-};
+function deleteFunction(bookId, originalBookId, bookmarkId) {
+  // let storedStatus = checkBookStatus(originalBookId);
+  var savedBook = document.getElementById(`${bookId}`);
+  const bookShelfState = document.getElementById("bookshelf00");
+  console.log(savedBook);
+  bookShelfState.removeChild(savedBook);
+  var searchResultBook = document.getElementById(`${originalBookId}`);
+  var searchResultBookIcon = document.getElementById(`${bookmarkId}`);
+  if (searchResultBook) {
+    searchResultBook.classList.replace("marked", "unmarked");
+    searchResultBookIcon.classList.replace("fa-solid", "fa-regular");
+  }
+  let storedStatus = unmarkedStatus;
+  sessionStorage.setItem(`${originalBookId}`, `${storedStatus}`);
+  sessionStorage.setItem("sessionBooks", bookShelfState.innerHTML);
+  sessionStorage.setItem("sessionContainer", contentHTML.innerHTML);
+}
 
 addBookBtn.addEventListener("click", () => {
   resultsContainer.classList.add("hidden");
