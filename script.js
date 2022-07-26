@@ -50,6 +50,7 @@ cancelBtn.innerHTML = "Cancel";
 
 const URLbooks =
   "https://www.googleapis.com/books/v1/volumes?q=__title__+inauthor:__author__&startIndex=__start__&maxResults=15&langResrict=en&key=__apiKey__";
+
 const apiKey = "AIzaSyCc7mtocCRRD4toqVJrcV0AnVPPD6ca_Rw";
 
 let title;
@@ -188,8 +189,6 @@ function checkBookStatus(bookId) {
   return storedStatus;
 }
 
-const authorsHTML = document.getElementsByClassName("s-author");
-
 function loadData(title, author, start) {
   fetch(
     URLbooks.replace("__title__", title)
@@ -201,23 +200,6 @@ function loadData(title, author, start) {
     .then((data) => {
       console.log(data);
       displayResults(data.items);
-
-      for (let i = 0; i <= authorsHTML.length - 1; i++) {
-        authorsHTML[i].addEventListener("click", (e) => {
-          console.log(e.target.innerText);
-          fetch(
-            URLbooks.replace("__author__", e.target.innerText)
-              .replace("__title__", "")
-              .replace("__start__", 0)
-              .replace("__apiKey__", apiKey)
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              resultsContainer.innerHTML = "";
-              displayResults(data.items);
-            });
-        });
-      }
     });
 }
 
